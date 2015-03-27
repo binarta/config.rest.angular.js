@@ -1,0 +1,18 @@
+{
+  "name": "binarta.config.rest.angular",
+  "main": "./src/config.rest.js",
+  "dependencies": {
+    "angular": "1.3.*",
+    "binarta.config.angular": "0.*.*"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.3.*"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
