@@ -8,7 +8,9 @@ function PublicConfigReaderFactory(reader) {
             $scope:{},
             key:request.key,
             scope:'public',
-            success: response.success
+            success: function (data) {
+                if (response && response.success) response.success(data);
+            }
         });
     };
 }
@@ -20,7 +22,9 @@ function PublicConfigWriterFactory(writer) {
             key:request.key,
             value: request.value,
             scope: 'public',
-            success: response.success
+            success: function (data) {
+                if (response && response.success) response.success(data);
+            }
         });
     }
 }

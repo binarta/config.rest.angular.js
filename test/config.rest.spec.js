@@ -13,48 +13,95 @@ describe('config.rest', function () {
             publicConfigWriter = _publicConfigWriter_;
         }));
 
-        describe('reading', function() {
-            beforeEach(function() {
-                request = {
-                    key:'x'
-                };
-                response = {
-                    success:function(it) {value = it}
-                };
-                publicConfigReader(request, response);
+        describe('reading', function () {
+            describe('with response', function () {
+                beforeEach(function () {
+                    request = {
+                        key: 'x'
+                    };
+                    response = {
+                        success: function (it) {
+                            value = it
+                        }
+                    };
+                    publicConfigReader(request, response);
+                });
+
+                it('delegates to configReader', function () {
+                    expect(configReader.calls[0].args[0].$scope).toEqual({});
+                    expect(configReader.calls[0].args[0].key).toEqual('x');
+                    expect(configReader.calls[0].args[0].scope).toEqual('public');
+                });
+
+                it('known values', function () {
+                    configReader.calls[0].args[0].success('a');
+                    expect(value).toEqual('a');
+                });
             });
 
-            it('delegates to configReader', function() {
-                expect(configReader.calls[0].args[0].$scope).toEqual({});
-                expect(configReader.calls[0].args[0].key).toEqual('x');
-                expect(configReader.calls[0].args[0].scope).toEqual('public');
-            });
+            describe('without response', function () {
+                beforeEach(function () {
+                    request = {
+                        key: 'x'
+                    };
 
-            it('known values', function() {
-                configReader.calls[0].args[0].success('a');
-                expect(value).toEqual('a');
+                    publicConfigReader(request);
+                });
+
+                it('delegates to configReader', function () {
+                    expect(configReader.calls[0].args[0].$scope).toEqual({});
+                    expect(configReader.calls[0].args[0].key).toEqual('x');
+                    expect(configReader.calls[0].args[0].scope).toEqual('public');
+                });
             });
         });
 
-        describe('writing', function() {
-            beforeEach(function() {
-                request = {
-                    key:'x',
-                    value:'a'
-                };
-                response = {success: 'response'};
-                publicConfigWriter(request, response);
+
+        describe('writing', function () {
+            describe('with response', function () {
+                beforeEach(function () {
+                    request = {
+                        key: 'x',
+                        value: 'a'
+                    };
+                    response = {
+                        success: function (it) {
+                            value = it
+                        }
+                    };
+                    publicConfigWriter(request, response);
+                });
+
+                it('delegates to configWriter', function () {
+                    expect(configWriter.calls[0].args[0].$scope).toEqual({});
+                    expect(configWriter.calls[0].args[0].key).toEqual('x');
+                    expect(configWriter.calls[0].args[0].value).toEqual('a');
+                    expect(configWriter.calls[0].args[0].scope).toEqual('public');
+                });
+
+                it('write accepted', function () {
+                    configWriter.calls[0].args[0].success('response');
+
+                    expect(value).toEqual('response');
+                });
             });
 
-            it('delegates to configWriter', function() {
-                expect(configWriter.calls[0].args[0].$scope).toEqual({});
-                expect(configWriter.calls[0].args[0].key).toEqual('x');
-                expect(configWriter.calls[0].args[0].value).toEqual('a');
-                expect(configWriter.calls[0].args[0].scope).toEqual('public');
-            });
+            describe('without response', function () {
+                beforeEach(function () {
+                    request = {
+                        key: 'x',
+                        value: 'a'
+                    };
 
-            it('write accepted', function() {
-                expect(configWriter.calls[0].args[0].success).toEqual(response.success);
+                    publicConfigWriter(request);
+                });
+
+                it('delegates to configWriter', function () {
+                    expect(configWriter.calls[0].args[0].$scope).toEqual({});
+                    expect(configWriter.calls[0].args[0].key).toEqual('x');
+                    expect(configWriter.calls[0].args[0].value).toEqual('a');
+                    expect(configWriter.calls[0].args[0].scope).toEqual('public');
+                });
             });
         });
     });
