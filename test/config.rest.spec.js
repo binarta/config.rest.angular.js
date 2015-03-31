@@ -11,6 +11,7 @@ describe('config.rest', function () {
             publicConfigReader = _publicConfigReader_;
             configWriter = _configWriter_;
             publicConfigWriter = _publicConfigWriter_;
+            value = undefined;
         }));
 
         describe('reading', function () {
@@ -53,6 +54,10 @@ describe('config.rest', function () {
                     expect(configReader.calls[0].args[0].key).toEqual('x');
                     expect(configReader.calls[0].args[0].scope).toEqual('public');
                 });
+
+                it('value is unknown', function () {
+                    expect(value).toBeUndefined();
+                });
             });
         });
 
@@ -80,9 +85,9 @@ describe('config.rest', function () {
                 });
 
                 it('write accepted', function () {
-                    configWriter.calls[0].args[0].success('response');
+                    configWriter.calls[0].args[0].success();
 
-                    expect(value).toEqual('response');
+                    expect(value).toEqual('a');
                 });
             });
 
@@ -101,6 +106,10 @@ describe('config.rest', function () {
                     expect(configWriter.calls[0].args[0].key).toEqual('x');
                     expect(configWriter.calls[0].args[0].value).toEqual('a');
                     expect(configWriter.calls[0].args[0].scope).toEqual('public');
+                });
+
+                it('value is unknown', function () {
+                    expect(value).toBeUndefined();
                 });
             });
         });

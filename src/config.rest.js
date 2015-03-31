@@ -22,8 +22,8 @@ function PublicConfigWriterFactory(writer) {
             key:request.key,
             value: request.value,
             scope: 'public',
-            success: function (data) {
-                if (response && response.success) response.success(data);
+            success: function () {
+                if (response && response.success) response.success(request.value);
             }
         });
     }
