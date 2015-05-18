@@ -4,7 +4,7 @@ angular.module('config.gateways', ['config'])
 
 function PublicConfigReaderFactory(reader) {
     return function (request, response) {
-        reader({
+        return reader({
             $scope:{},
             key:request.key,
             scope:'public',
@@ -17,7 +17,7 @@ function PublicConfigReaderFactory(reader) {
 
 function PublicConfigWriterFactory(writer) {
     return function(request, response) {
-        writer({
+        return writer({
             $scope:{},
             key:request.key,
             value: request.value,
