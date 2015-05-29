@@ -38,7 +38,7 @@ describe('config.rest', function () {
 
             it('known values', function () {
                 publicConfigReader(request, response);
-                configReader.calls[0].args[0].success('a');
+                configReader.calls[0].args[0].success({value: 'a'});
 
                 expect(value).toEqual('a');
             });

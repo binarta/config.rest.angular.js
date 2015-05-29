@@ -9,7 +9,7 @@ function PublicConfigReaderFactory(reader) {
             key:request.key,
             scope:'public',
             success: function (data) {
-                if (response && response.success) response.success(data);
+                if (response && response.success) response.success(data.value);
             }
         });
     };
