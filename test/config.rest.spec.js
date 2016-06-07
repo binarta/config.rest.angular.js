@@ -7,10 +7,10 @@ describe('config.rest', function () {
 
     beforeEach(inject(function (_configReader_, _publicConfigReader_, _configWriter_, _publicConfigWriter_) {
         configReader = _configReader_;
-        configReader.andReturn({success: function () {}});
+        configReader.and.returnValue({success: function () {}});
         publicConfigReader = _publicConfigReader_;
         configWriter = _configWriter_;
-        configWriter.andReturn({success: function () {}});
+        configWriter.and.returnValue({success: function () {}});
         publicConfigWriter = _publicConfigWriter_;
         value = undefined;
     }));
@@ -31,14 +31,14 @@ describe('config.rest', function () {
             it('delegates to configReader', function () {
                 publicConfigReader(request, response);
 
-                expect(configReader.calls[0].args[0].$scope).toEqual({});
-                expect(configReader.calls[0].args[0].key).toEqual('x');
-                expect(configReader.calls[0].args[0].scope).toEqual('public');
+                expect(configReader.calls.first().args[0].$scope).toEqual({});
+                expect(configReader.calls.first().args[0].key).toEqual('x');
+                expect(configReader.calls.first().args[0].scope).toEqual('public');
             });
 
             it('known values', function () {
                 publicConfigReader(request, response);
-                configReader.calls[0].args[0].success({value: 'a'});
+                configReader.calls.first().args[0].success({value: 'a'});
 
                 expect(value).toEqual('a');
             });
@@ -58,9 +58,9 @@ describe('config.rest', function () {
             it('delegates to configReader', function () {
                 publicConfigReader(request);
 
-                expect(configReader.calls[0].args[0].$scope).toEqual({});
-                expect(configReader.calls[0].args[0].key).toEqual('x');
-                expect(configReader.calls[0].args[0].scope).toEqual('public');
+                expect(configReader.calls.first().args[0].$scope).toEqual({});
+                expect(configReader.calls.first().args[0].key).toEqual('x');
+                expect(configReader.calls.first().args[0].scope).toEqual('public');
             });
 
             it('value is unknown', function () {
@@ -93,15 +93,15 @@ describe('config.rest', function () {
             it('delegates to configWriter', function () {
                 publicConfigWriter(request, response);
 
-                expect(configWriter.calls[0].args[0].$scope).toEqual({});
-                expect(configWriter.calls[0].args[0].key).toEqual('x');
-                expect(configWriter.calls[0].args[0].value).toEqual('a');
-                expect(configWriter.calls[0].args[0].scope).toEqual('public');
+                expect(configWriter.calls.first().args[0].$scope).toEqual({});
+                expect(configWriter.calls.first().args[0].key).toEqual('x');
+                expect(configWriter.calls.first().args[0].value).toEqual('a');
+                expect(configWriter.calls.first().args[0].scope).toEqual('public');
             });
 
             it('write accepted', function () {
                 publicConfigWriter(request, response);
-                configWriter.calls[0].args[0].success();
+                configWriter.calls.first().args[0].success();
 
                 expect(value).toEqual('a');
             });
@@ -122,10 +122,10 @@ describe('config.rest', function () {
             it('delegates to configWriter', function () {
                 publicConfigWriter(request);
 
-                expect(configWriter.calls[0].args[0].$scope).toEqual({});
-                expect(configWriter.calls[0].args[0].key).toEqual('x');
-                expect(configWriter.calls[0].args[0].value).toEqual('a');
-                expect(configWriter.calls[0].args[0].scope).toEqual('public');
+                expect(configWriter.calls.first().args[0].$scope).toEqual({});
+                expect(configWriter.calls.first().args[0].key).toEqual('x');
+                expect(configWriter.calls.first().args[0].value).toEqual('a');
+                expect(configWriter.calls.first().args[0].scope).toEqual('public');
             });
 
             it('value is unknown', function () {
